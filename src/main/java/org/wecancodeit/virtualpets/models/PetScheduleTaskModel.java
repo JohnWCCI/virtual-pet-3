@@ -1,9 +1,7 @@
 package org.wecancodeit.virtualpets.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+
 
 /**
  * Class for schedule task

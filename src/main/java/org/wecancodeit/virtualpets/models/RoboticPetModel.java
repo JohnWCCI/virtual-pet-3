@@ -1,18 +1,29 @@
 package org.wecancodeit.virtualpets.models;
 
-import org.wecancodeit.virtualpets.enums.PetTypeEnum;
-import org.wecancodeit.virtualpets.enums.RoboticHealthEnum;
+import org.wecancodeit.virtualpets.enums.*;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
 
 @Entity
 @Table(name="T_roboticPet")
 public class RoboticPetModel extends PetModel {
+    @Column(length=50, nullable = false)
     private String model;
+    @Column(length=150, nullable = true)
     private String manufacturer;
+
+    /**
+     * Min and max values are based on precentage
+     */
+    @Min(0)
+    @Max(100)
     private int energyLevel;
+    /**
+     * Min and max values are based on precentage
+     */
+    @Min(0)
+    @Max(100)
     private int oilLevel;
     private RoboticHealthEnum health;
 

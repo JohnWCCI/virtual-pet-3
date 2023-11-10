@@ -3,6 +3,7 @@ package org.wecancodeit.virtualpets.models;
 import org.wecancodeit.virtualpets.enums.PetTypeEnum;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 
 
 /**
@@ -15,7 +16,14 @@ public class PetMaintenanceModel {
     @Id
     @GeneratedValue
     private long id;
+    @Column(length=50, nullable = false)
     private String name;
+
+    /**
+     * This is for mins of next inspection
+     */
+    @Min(0)
+    @Max(60)
     private int frequency;
     private PetTypeEnum petType;
     private String effectedProperty;

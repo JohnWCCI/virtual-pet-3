@@ -2,9 +2,9 @@ package org.wecancodeit.virtualpets.models;
 
 import org.wecancodeit.virtualpets.enums.PetTypeEnum;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MappedSuperclass;
 
 
@@ -16,8 +16,12 @@ public abstract class PetModel {
     @Id
     @GeneratedValue()
     private long id;
+
+    @Column(length=50, nullable = false)
     private String name;
+
     private PetTypeEnum petType;
+    
     private String imageUrl;
 
    
