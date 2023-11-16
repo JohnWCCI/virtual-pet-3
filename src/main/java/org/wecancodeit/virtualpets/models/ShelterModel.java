@@ -18,6 +18,9 @@ public class ShelterModel extends ContactModel {
     @OneToMany(mappedBy = "shelterModel", cascade = CascadeType.ALL)
     private Collection<OrganicPetModel> organicPets;
 
+     @OneToMany(mappedBy = "shelterModel", cascade = CascadeType.ALL)
+    private Collection<AdopterModel> adopterModels;
+
     @ManyToMany
     @JoinTable(name = "shelter_volunteer", 
     joinColumns = @JoinColumn(name = "shelter_id"), 

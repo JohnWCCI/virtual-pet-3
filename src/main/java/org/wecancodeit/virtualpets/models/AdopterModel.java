@@ -1,6 +1,9 @@
 package org.wecancodeit.virtualpets.models;
 
+import java.util.Collection;
+
 import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 /**
@@ -11,6 +14,10 @@ import jakarta.persistence.Table;
 public class AdopterModel extends ContactModel{
    
     private String preferred;
+    
+    @ManyToOne
+    private ShelterModel shelterModel;
+
 
     public AdopterModel() {
     }
@@ -25,4 +32,13 @@ public class AdopterModel extends ContactModel{
         return preferred;
     }
 
+    public ShelterModel getShelterModel() {
+        return shelterModel;
+    }
+
+    public void setShelterModel(ShelterModel shelterModel) {
+        this.shelterModel = shelterModel;
+    }
+
+    
 }
