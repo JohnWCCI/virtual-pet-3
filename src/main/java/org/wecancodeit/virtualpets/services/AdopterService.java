@@ -5,10 +5,9 @@ import java.util.Collection;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
-import org.wecancodeit.virtualpets.dto.AdopterDto;
-import org.wecancodeit.virtualpets.models.AdopterModel;
-import org.wecancodeit.virtualpets.repositories.AdopterRepository;
-
+import org.wecancodeit.virtualpets.dto.*;
+import org.wecancodeit.virtualpets.models.*;
+import org.wecancodeit.virtualpets.repositories.*;
 import jakarta.annotation.Resource;
 
 @Service
@@ -21,12 +20,13 @@ public class AdopterService {
         this.adopterRepository = adopterRepository;
     }
 
-    public AdopterDto update(AdopterDto dto) {
+    public AdopterProfileDto update(AdopterProfileDto dto, ShelterProfileDto shelter) {
         try {
-            AdopterModel model = convertToModel(dto);
+            AdopterModel model = DataDtoConverts.convert(dto);
+            model.setShelterModel(DataDtoConverts.convert(shelter));
             // TODO valdiation gose here
             model = adopterRepository.save(model);
-            dto = convertToDto(model);
+            dto = DataDtoConverts.convert(model);
         } catch (Exception ex) {
             // TODO error handling here
         }
@@ -41,49 +41,40 @@ public class AdopterService {
         }
     }
 
-    public Collection<AdopterDto> findAll() {
-        ArrayList<AdopterDto> dtos = new ArrayList<>();
+    public Collection<AdopterProfileDto> findAll() {
+        ArrayList<AdopterProfileDto> dtos = new ArrayList<>();
         Iterable<AdopterModel> adopters = adopterRepository.findAll();
         for (AdopterModel model : adopters) {
-            dtos.add(convertToDto(model));
+            dtos.add(DataDtoConverts.convert(model));
         }
         return dtos;
     }
 
-    public AdopterDto findById(long id) {
+    public AdopterProfileDto findById(long id) {
         Optional<AdopterModel> opAdopter = adopterRepository.findById(id);
         if (opAdopter.isPresent()) {
-            return convertToDto(opAdopter.get());
+            return DataDtoConverts.convert(opAdopter.get());
         }
         return null;
     }
 
-    public Collection<AdopterDto> findByName(String name) {
+    public ContactInfoDto findContactInfo( long id){
+        Optional<AdopterModel> opAdopter = adopterRepository.findById(id);
+        if (opAdopter.isPresent()) {
+            return new ContactInfoDto(id,opAdopter.get().getName(), opAdopter.get().getPhone());
+        }
+        return null;
+    }
+
+
+    public Collection<AdopterProfileDto> findByName(String name) {
         Collection<AdopterModel> adopters = adopterRepository.findByName(name);
-        ArrayList<AdopterDto> dtos = new ArrayList<>();
+        ArrayList<AdopterProfileDto> dtos = new ArrayList<>();
          for (AdopterModel model : adopters) {
-            dtos.add(convertToDto(model));
+            dtos.add(DataDtoConverts.convert(model));
         }
         return dtos;
     }
 
-    private AdopterModel convertToModel(AdopterDto dto) {
-        AdopterModel adopter = new AdopterModel(
-                dto.getName(), dto.getAddress(), dto.getCity(),
-                dto.getState(), dto.getZip(), dto.getPhone(),
-                dto.getEmail(), dto.getImageUrl(), dto.getPreferred());
-        adopter.setId(dto.getId());
-        return adopter;
-
-    }
-
-    private AdopterDto convertToDto(AdopterModel model) {
-        AdopterDto adopter = new AdopterDto(model.getId(),
-                model.getName(), model.getAddress(), model.getCity(),
-                model.getState(), model.getZip(), model.getPhone(),
-                model.getEmail(), model.getImageUrl(), model.getPreferred());
-        adopter.setShelterModel(model.getShelterModel());
-        return adopter;
-
-    }
+  
 }

@@ -27,6 +27,7 @@ public class OrganicPetProfileDto extends PetProfileDto {
         this.mood = mood;
         this.temperment = temperment;
         this.fixed = fixed;
+        this.setId(id);
     }
 
     public String getBreed() {
