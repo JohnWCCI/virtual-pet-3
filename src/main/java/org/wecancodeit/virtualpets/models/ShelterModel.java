@@ -1,6 +1,8 @@
 package org.wecancodeit.virtualpets.models;
 
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 import jakarta.persistence.*;
 
@@ -21,11 +23,8 @@ public class ShelterModel extends ContactModel {
      @OneToMany(mappedBy = "shelterModel", cascade = CascadeType.ALL)
     private Collection<AdopterModel> adopterModels;
 
-    @ManyToMany
-    @JoinTable(name = "shelter_volunteer", 
-    joinColumns = @JoinColumn(name = "shelter_id"), 
-    inverseJoinColumns = @JoinColumn(name = "volunteer_id"))
-    private Collection<VolunteerModel> volunteer;
+   @ManyToMany(mappedBy = "shelters")
+    private Set<VolunteerModel> volunteers = new HashSet<>();
 
     public ShelterModel() {
     }
@@ -49,7 +48,7 @@ public class ShelterModel extends ContactModel {
         return organicPets;
     }
 
-    public Collection<VolunteerModel> getVolunteer() {
-        return volunteer;
+    public Set<VolunteerModel> getVolunteer() {
+        return volunteers;
     }
 }

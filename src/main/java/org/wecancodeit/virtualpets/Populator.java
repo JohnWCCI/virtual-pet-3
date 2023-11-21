@@ -2,7 +2,11 @@ package org.wecancodeit.virtualpets;
 
 import org.springframework.stereotype.Component;
 import org.wecancodeit.virtualpets.dto.AdopterProfileDto;
+import org.wecancodeit.virtualpets.dto.PetMaintenanceProfileDto;
 import org.wecancodeit.virtualpets.dto.ShelterProfileDto;
+import org.wecancodeit.virtualpets.dto.VolunteerProfileDto;
+import org.wecancodeit.virtualpets.enums.PetTypeEnum;
+import org.wecancodeit.virtualpets.models.VolunteerModel;
 import org.wecancodeit.virtualpets.services.*;
 import org.springframework.boot.CommandLineRunner;
 
@@ -11,10 +15,15 @@ public class Populator implements CommandLineRunner {
 
     private AdopterService adopterService;
     private ShelterService shelterService;
+    private VolunteerService volunteerService;
+    private PetMaintenanceService maintenanceService;
 
-    public Populator(AdopterService adopterService, ShelterService shelterService) {
+    public Populator(AdopterService adopterService, ShelterService shelterService, VolunteerService volunteerService,
+            PetMaintenanceService maintenanceService) {
         this.adopterService = adopterService;
         this.shelterService = shelterService;
+        this.volunteerService = volunteerService;
+        this.maintenanceService = maintenanceService;
     }
 
     @Override
@@ -51,7 +60,24 @@ public class Populator implements CommandLineRunner {
                     "IN", "46563",
                     "6166156678", "Nomail@no.com", "NoImage", "Dog");
             adopter3 = adopterService.update(adopter3, shelter3);
+
         }
+
+        for (int x = 0; x < 10; x++) {
+            VolunteerProfileDto volunteer = new VolunteerProfileDto(0l, "Jim Smith " + x, "112 main st", "Plymouth",
+                    "IN", "46563",
+                    "6166156678", "Nomail@no.com", "NoImage");
+            volunteer = volunteerService.update(volunteer);
+            volunteerService.addShelter(shelter1.getId(), volunteer.getId());
+            volunteerService.addShelter(shelter2.getId(), volunteer.getId());
+            volunteerService.addShelter(shelter3.getId(), volunteer.getId());
+        }
+
+       
+            PetMaintenanceProfileDto profileDto1 = new PetMaintenanceProfileDto(0,"Feed Pet",24,PetTypeEnum.ORGANIC_DOG,"Health");
+            PetMaintenanceProfileDto profileDto2 = new PetMaintenanceProfileDto(0,"Feed Pet",24,PetTypeEnum.ORGANIC_CAT,"Health");
+         PetMaintenanceProfileDto profileDto3 = new PetMaintenanceProfileDto(0,"Change Oil",24,PetTypeEnum.ROBOTIC_CAT,"Health");
+PetMaintenanceProfileDto profileDto4 = new PetMaintenanceProfileDto(0,"Change Oil",24,PetTypeEnum.ROBOTIC_CAT,"Health");
     }
 
 }

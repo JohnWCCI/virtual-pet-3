@@ -2,11 +2,7 @@ package org.wecancodeit.virtualpets.models;
 
 import org.wecancodeit.virtualpets.enums.PetTypeEnum;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.MappedSuperclass;
-
+import jakarta.persistence.*;
 
 /**
  * Default class fields for all pets

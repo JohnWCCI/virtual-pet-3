@@ -1,10 +1,10 @@
 package org.wecancodeit.virtualpets.models;
 
-import java.util.Collection;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.Table;
+import java.util.HashSet;
+import java.util.Set;
+
+import jakarta.persistence.*;
 
 /**
  * Class to manage Volunteers
@@ -13,8 +13,12 @@ import jakarta.persistence.Table;
 @Table(name = "T_volunteer")
 public class VolunteerModel extends ContactModel {
 
-    // private List<ShelterModel> shelters;
-    // private List<PetModel> pets;
+ 
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "shelter_volunteer", 
+    joinColumns = @JoinColumn(name = "volunteer_id"), 
+    inverseJoinColumns = @JoinColumn(name = "shelter_id"))
+    private Set<ShelterModel> shelters = new HashSet<>();
 
     public VolunteerModel() {
     }
@@ -24,10 +28,11 @@ public class VolunteerModel extends ContactModel {
         super(name, address, city, state, zip, phone, email, imageUrl);
     }
 
-    @ManyToMany(mappedBy = "volunteer")
-    private Collection<ShelterModel> shelters;
-
-    public Collection<ShelterModel> getShelters() {
+    public Set<ShelterModel> getShelters() {
         return shelters;
+    }
+
+    public void setShelters(Set<ShelterModel> shelters) {
+        this.shelters = shelters;
     }
 }

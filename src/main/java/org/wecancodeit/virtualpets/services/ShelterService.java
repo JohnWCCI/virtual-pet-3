@@ -9,6 +9,7 @@ import org.wecancodeit.virtualpets.dto.ContactInfoDto;
 import org.wecancodeit.virtualpets.dto.ShelterProfileDto;
 import org.wecancodeit.virtualpets.models.ShelterModel;
 import org.wecancodeit.virtualpets.repositories.ShelterRepository;
+import org.wecancodeit.virtualpets.repositories.VolunteerRepository;
 
 import jakarta.annotation.Resource;
 
@@ -17,9 +18,14 @@ public class ShelterService {
     @Resource
     private ShelterRepository shelterRepository;
 
-    public ShelterService(ShelterRepository shelterRepository) {
+    @Resource
+    private VolunteerRepository volunteerRepository;
+
+    public ShelterService(ShelterRepository shelterRepository, VolunteerRepository volunteerRepository) {
         this.shelterRepository = shelterRepository;
+        this.volunteerRepository = volunteerRepository;
     }
+
 
     public ShelterProfileDto update(ShelterProfileDto dto) {
         try {
@@ -33,6 +39,7 @@ public class ShelterService {
         return dto;
     }
 
+
     public void deleteById(long id) {
         try {
             shelterRepository.deleteById(id);
@@ -40,6 +47,7 @@ public class ShelterService {
             // TODO error handling here
         }
     }
+
 
     public Collection<ShelterProfileDto> findAll() {
         ArrayList<ShelterProfileDto> dtos = new ArrayList<>();
@@ -49,6 +57,7 @@ public class ShelterService {
         }
         return dtos;
     }
+
 
     public ShelterProfileDto findById(long id) {
         Optional<ShelterModel> opShelter = shelterRepository.findById(id);
@@ -65,6 +74,7 @@ public class ShelterService {
         }
         return null;
     }
+
 
     public Collection<ShelterProfileDto> findByName(String name) {
         Collection<ShelterModel> shelters = shelterRepository.findByName(name);

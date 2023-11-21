@@ -1,11 +1,7 @@
 package org.wecancodeit.virtualpets.services;
 
-import org.wecancodeit.virtualpets.dto.AdopterProfileDto;
-import org.wecancodeit.virtualpets.dto.OrganicPetProfileDto;
-import org.wecancodeit.virtualpets.dto.ShelterProfileDto;
-import org.wecancodeit.virtualpets.models.AdopterModel;
-import org.wecancodeit.virtualpets.models.OrganicPetModel;
-import org.wecancodeit.virtualpets.models.ShelterModel;
+import org.wecancodeit.virtualpets.dto.*;
+import org.wecancodeit.virtualpets.models.*;
 
 public final class DataDtoConverts {
 
@@ -47,4 +43,38 @@ public final class DataDtoConverts {
 
     }
     
+ protected static final VolunteerModel convert(VolunteerProfileDto dto) {
+        VolunteerModel shelter = new VolunteerModel(
+                dto.getName(), dto.getAddress(), dto.getCity(),
+                dto.getState(), dto.getZip(), dto.getPhone(),
+                dto.getEmail(), dto.getImageUrl());
+                shelter.setId(dto.getId());
+        return shelter;
+    }
+
+    protected static final VolunteerProfileDto convert(VolunteerModel model) {
+        VolunteerProfileDto volunteer = new VolunteerProfileDto(model.getId(),
+                model.getName(), model.getAddress(), model.getCity(),
+                model.getState(), model.getZip(), model.getPhone(),
+                model.getEmail(), model.getImageUrl());
+        return volunteer;
+    }
+
+    protected static final PetMaintenanceProfileDto convert(PetMaintenanceModel model){
+        PetMaintenanceProfileDto maintenance = new PetMaintenanceProfileDto(
+            model.getId(), model.getName(), 
+            model.getFrequency(),model.getPetType(),
+            model.getEffectedProperty());
+        return maintenance;      
+    }
+ protected static final PetMaintenanceModel convert(PetMaintenanceProfileDto model){
+        PetMaintenanceModel maintenance = new PetMaintenanceModel(
+            model.getName(), 
+            model.getFrequency(),model.getPetType(),
+            model.getEffectedProperty());
+            maintenance.setId(model.getId());
+        return maintenance;
+        
+           
+    }
 }

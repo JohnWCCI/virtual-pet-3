@@ -1,6 +1,5 @@
 package org.wecancodeit.virtualpets.models;
 
-import java.util.Collection;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;

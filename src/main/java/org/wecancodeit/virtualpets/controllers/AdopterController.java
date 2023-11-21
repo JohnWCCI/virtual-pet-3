@@ -16,7 +16,7 @@ public class AdopterController {
         this.service = service;
     }
 
-    @GetMapping("/Contact/{id}")
+    @GetMapping({"/contact/{id}","/Contact/{id}"})
     public String getContactInfo(@PathVariable Long id, Model model){
         model.addAttribute("contactInfo", service.findContactInfo(id));
         return "contactView";
